@@ -1,0 +1,30 @@
+.introductoryPage-container {
+  background-color: #181717;
+  height: 90vh;
+ align-content: center;
+  justify-items: center;
+  color: white;
+
+ span  {
+   font-size: 50px;
+ }
+  strong {
+    font-size: 50px;
+
+  }
+  p {
+    font-size: 50px;
+  }
+  .span-text {
+    font-size: 18px;
+  }
+  h1 {
+    text-align: center;
+  }
+  .span-name {
+    color: #5c62ec
+  }
+  em > span {
+    color : #5c62ec;
+  }
+}
