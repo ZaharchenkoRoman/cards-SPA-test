@@ -1,0 +1,16 @@
+.pagination-wrapper {
+  display: flex;
+  flex-direction: row;
+  margin: 40px auto;
+  justify-self: center;
+
+  .pagination-wrapper__ul {
+    display: flex;
+    column-gap: 10px;
+  }
+
+  .pagination-button {
+    margin: 0 15px
+  }
+}
+

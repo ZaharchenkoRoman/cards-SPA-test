@@ -8,22 +8,24 @@ const Card = ({card}: propsType) => {
   const loc = useNavigate();
 
 
-  const productIdHandler = (id: number) => {
-    loc(`/products/${id}`, {state: card} )
+  const productIdHandler = (id: number | string) => {
+    loc(`/products/${id}`, {state: card})
   }
 
 
-
   return (
-    <div className="card-container" onClick={() => productIdHandler(card.id)}>
+    <div
+      className="card-container"
+      onClick={() => productIdHandler(card.id)}
+    >
       <img
         className="profile-pic"
-        src="../../../public/pics/profilePhoto.svg"
+        src="../../../public/assets/pics/profilePhoto.svg"
         alt=""
       />
-      <p>{card.email}</p>
-      <FcLike />
-      <FaTrash />
+      <p>{card.email.slice(0,20) + "..."}</p>
+      <div className="icons-wrapper"><FaTrash /><FcLike />
+        </div>
     </div>
   );
 };

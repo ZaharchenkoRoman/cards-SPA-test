@@ -13,7 +13,7 @@ const Header = () => {
   }
   return (
     <div className="header-container">
-    <Button onClick={linkHandler}>Show products cards</Button>
+    <Button onClick={linkHandler}>Show products</Button>
       <Link to="/createProduct"><Button>Create product</Button></Link>
     </div>
   );

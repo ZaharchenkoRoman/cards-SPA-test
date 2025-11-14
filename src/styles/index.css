@@ -1,7 +1,11 @@
 .header-container {
+  display: flex;
   height: 150px;
   background-color: #181717;
   border-bottom: 1px solid #26292D;
+  align-items: center;
+  justify-content: center;
+  column-gap: 20px;
 }
 
 .introductoryPage-container {
@@ -94,18 +98,40 @@ table {
 }
 
 .card-container {
+  display: flex;
   margin-top: 40px;
   height: 200px;
   width: 200px;
   background-color: white;
   border-radius: 15px;
-  align-content: center;
-  justify-items: center;
   box-shadow: 1px 1px 10px black;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
 }
 .card-container .profile-pic {
   width: 150px;
   height: 150px;
+}
+.card-container .icons-wrapper {
+  margin: 10px 20px;
+  display: flex;
+  flex-direction: row;
+  column-gap: 150px;
+}
+
+.pagination-wrapper {
+  display: flex;
+  flex-direction: row;
+  margin: 40px auto;
+  justify-self: center;
+}
+.pagination-wrapper .pagination-wrapper__ul {
+  display: flex;
+  column-gap: 10px;
+}
+.pagination-wrapper .pagination-button {
+  margin: 0 15px;
 }
 
 /*# sourceMappingURL=index.css.map */

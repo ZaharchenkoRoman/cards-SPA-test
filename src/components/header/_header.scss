@@ -1,5 +1,10 @@
 .header-container {
+  display: flex;
   height: 150px;
   background-color: #181717;
   border-bottom: 1px solid #26292D;
+  align-items: center;
+  justify-content: center;
+  column-gap: 20px;
+
 }

@@ -1,12 +1,16 @@
 .card-container {
+  display: flex;
   margin-top: 40px;
   height: 200px;
   width: 200px;
   background-color: white;
   border-radius: 15px;
-  align-content: center;
-  justify-items: center;
   box-shadow: 1px 1px 10px black; ;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+
+
 
 
 
@@ -14,5 +18,14 @@
 
     width: 150px;
     height: 150px;
+  }
+
+
+
+  .icons-wrapper {
+    margin: 10px 20px;
+    display: flex;
+    flex-direction: row;
+    column-gap: 150px;
   }
 }

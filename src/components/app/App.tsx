@@ -4,6 +4,7 @@ import IntroductoryPage
 import Products from "../products/products.tsx";
 import ProductIdPage from "../productIdPage/productIdPage.tsx";
 import CreateProduct from "../create-product/create-product.tsx";
+import Header from "../header/header.tsx";
 
 
 const App = () => {
@@ -11,6 +12,7 @@ const App = () => {
 
   return (
     <>
+      <Header />
       <Routes>
         <Route
           path="/"
@@ -24,7 +26,10 @@ const App = () => {
           path="/products/:id"
           element={<ProductIdPage />}
         ></Route>
-        <Route path="/createProduct" element={<CreateProduct/>}></Route>
+        <Route
+          path="/createProduct"
+          element={<CreateProduct />}
+        ></Route>
       </Routes>
 
     </>
