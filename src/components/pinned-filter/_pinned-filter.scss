@@ -1,0 +1,21 @@
+.empty-pinned-filter {
+  display: flex;
+  margin-top: 350px;
+  justify-self: center;
+  align-items: center;
+  column-gap: 20px;
+}
+.pinnedCard-wrapper {
+  display: flex;
+  flex-direction: row;
+  column-gap: 15px;
+  row-gap: 15px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  margin: 0 50px;
+}
+.back-button {
+  margin: 20px auto;
+  display: block;
+}

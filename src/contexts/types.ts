@@ -5,6 +5,4 @@ export interface paginationContextType {
   numberCardsOnPage: number
   setCurrentPage: (page: number | ((prev: number) => number)) => void
   currentPage: number
-
-
 }

@@ -1,6 +1,5 @@
 const IntroductoryPage = () => {
   return (
-
     <>
       <div className="introductoryPage-container">
         <h1>

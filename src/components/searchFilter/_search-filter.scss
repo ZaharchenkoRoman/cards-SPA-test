@@ -1,0 +1,16 @@
+.search-input{
+  display: block;
+  margin: 30px auto 0 auto;
+  height: 30px;
+  width: 500px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.filtered-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  column-gap: 30px;
+  row-gap: 15px;
+}

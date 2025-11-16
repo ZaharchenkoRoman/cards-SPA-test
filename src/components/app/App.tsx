@@ -31,7 +31,6 @@ const App = () => {
           element={<CreateProduct />}
         ></Route>
       </Routes>
-
     </>
   )
 }

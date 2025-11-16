@@ -4,17 +4,17 @@ import {useCardsStore} from "../store/store.ts";
 
 
 const Header = () => {
-  const {fetchCards} = useCardsStore()
+  const {fetchCards,setLikedFilter, likedFilter} = useCardsStore()
   const toProductsHandler = useNavigate()
   const linkHandler = () => {
     toProductsHandler("/products")
     fetchCards()
-
   }
   return (
     <div className="header-container">
-    <Button onClick={linkHandler}>Show products</Button>
-      <Link to="/createProduct"><Button>Create product</Button></Link>
+    <Button onClick={linkHandler} disabled={likedFilter === "Pinned"}>All cards</Button>
+      <Link to="/createProduct"><Button disabled={likedFilter === "Pinned"}>Create product</Button></Link>
+      <Button disabled={likedFilter === "Pinned"} onClick={() => setLikedFilter("Pinned")}>Pinned Cards</Button>
     </div>
   );
 };

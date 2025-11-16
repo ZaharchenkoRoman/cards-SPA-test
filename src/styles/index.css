@@ -6,6 +6,7 @@
   align-items: center;
   justify-content: center;
   column-gap: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .introductoryPage-container {
@@ -35,15 +36,6 @@
 }
 .introductoryPage-container em > span {
   color: #5c62ec;
-}
-
-.products-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  column-gap: 20px;
-  row-gap: 20px;
-  justify-content: center;
 }
 
 /*reset CSS styles*/
@@ -132,6 +124,73 @@ table {
 }
 .pagination-wrapper .pagination-button {
   margin: 0 15px;
+}
+
+.products-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: 20px;
+  row-gap: 20px;
+  justify-content: center;
+}
+
+.empty-pinned-filter {
+  display: flex;
+  margin-top: 350px;
+  justify-self: center;
+  align-items: center;
+  column-gap: 20px;
+}
+
+.pinnedCard-wrapper {
+  display: flex;
+  flex-direction: row;
+  column-gap: 15px;
+  row-gap: 15px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  margin: 0 50px;
+}
+
+.back-button {
+  margin: 20px auto;
+  display: block;
+}
+
+.form-wrapper {
+  margin: 150px auto;
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  height: 500px;
+  width: 850px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.error-div {
+  color: red;
+}
+
+.search-input {
+  display: block;
+  margin: 30px auto 0 auto;
+  height: 30px;
+  width: 500px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.filtered-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  column-gap: 30px;
+  row-gap: 15px;
 }
 
 /*# sourceMappingURL=index.css.map */
