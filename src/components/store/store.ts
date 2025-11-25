@@ -4,18 +4,23 @@ import {immer} from "zustand/middleware/immer";
 import type {cardStore, cardType} from "./types.ts";
 
 
-export const useCardsStore = create<cardStore>()(immer((set) => ({
+export const useCardsStore = create<cardStore>()(immer((set, get) => ({
+
   cards: [],
   isLoading: false,
   error: null,
   likedFilter: "All",
   isEditing: false,
+  searchingCards: [],
+  cardsOnPage: 10,
+  pageNumber: 1,
+  allCards: 500,
+  likedCardsById: [],
   fetchCards: async () => {
     set((state) => {
       state.isLoading = true;
       state.error = null;
     })
-
     try {
       const res = await axios.get<cardType[]>("https://jsonplaceholder.typicode.com/comments")
       set((state) => {
@@ -36,17 +41,25 @@ export const useCardsStore = create<cardStore>()(immer((set) => ({
     }
 
   },
-  createCard: (newCard) => {
+  createCard: async (newCard) => {
+    await axios.post("https://jsonplaceholder.typicode.com/comments", {body: newCard})
     set((state) => {
       state.cards = [newCard, ...state.cards];
     })
   },
-  likeHandler: (id) => {
-    set((state) => {
-      state.cards.map(card => card.id === id ? card.isLiked = !card.isLiked : card)
-    })
+  likeHandler: (card) => {
+    set((state) => ({
+      cards: state.cards.map(item => item.id === card.id ? ({
+        ...item,
+        isLiked: !item.isLiked
+      }) : item),
+      likedCardsById: [...state.likedCardsById, card.id],
+
+    }))
+
   },
-  cardDeleteHandler: (id) => {
+  cardDeleteHandler: async (id) => {
+    await axios.delete(`https://jsonplaceholder.typicode.com/comments/${id}`)
     set((state) => ({
       cards: state.cards.filter(card => card.id !== id)
     }))
@@ -61,17 +74,38 @@ export const useCardsStore = create<cardStore>()(immer((set) => ({
       isEditing: !state.isEditing
     }))
   },
-  saveCardChangesHandler: (id, payload) => {
+  updateCardInfo: async (id, payload) => {
+    await axios.post("https://jsonplaceholder.typicode.com/comments", {body: payload})
     set((state) => {
-      state.cards = state.cards.filter(card => card.id === id).map(card => ({
-        ...card,
-        email: payload.email,
-        name: payload.name,
-        body: payload.body,
-      }))
+      state.cards = state.cards.map(card => id === card.id ? ({...card, ...payload}) : card)
       state.isEditing = false
     })
+
+  },
+  searchFilter: async (postId: string) => {
+    const res = await axios.get(`https://jsonplaceholder.typicode.com/comments?postId=${postId}`)
+    set(() => ({
+      searchingCards: res.data
+    }))
+  },
+
+  setPageNumber: (pageNumber: number) => {
+    set((state) => {
+      state.pageNumber = pageNumber
+    })
+  },
+  pagination: async (pageNumber: number) => {
+    const {cardsOnPage} = get()
+
+
+    const res = await axios.get<cardType[]>(`https://jsonplaceholder.typicode.com/comments?_page=${pageNumber}&_limit=${cardsOnPage}`)
+    set((state) => ({
+      cards: [...res.data.map(card => ({...card, isLiked: false})), ...state.cards].filter((card, ind, array) => array.findIndex(c => c.id === card.id) === ind),
+    }))
+
   }
 
 })))
+
+
 

@@ -10,9 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
     "@hookform/resolvers": "^5.2.2",
+    "@mui/material": "^7.3.5",
     "@types/uuid": "^11.0.0",
-    "antd": "^5.28.1",
     "axios": "^1.13.2",
     "immer": "^10.2.0",
     "react": "^19.2.0",

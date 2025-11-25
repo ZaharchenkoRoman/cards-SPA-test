@@ -1,14 +1,15 @@
-import {Button} from "antd";
+
 import {Link, useNavigate} from "react-router";
 import {useCardsStore} from "../store/store.ts";
+import {Button} from "@mui/material";
 
 
 const Header = () => {
-  const {fetchCards,setLikedFilter, likedFilter} = useCardsStore()
+  const {setLikedFilter, likedFilter} = useCardsStore()
   const toProductsHandler = useNavigate()
-  const linkHandler = () => {
+  const linkHandler = async () => {
     toProductsHandler("/products")
-    fetchCards()
+
   }
   return (
     <div className="header-container">

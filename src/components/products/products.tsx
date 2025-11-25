@@ -1,4 +1,4 @@
-import Pagination from "../pagination/pagination.tsx";
+import Pag from "../pagination/pag.tsx";
 
 
 const Products = () => {
@@ -6,7 +6,7 @@ const Products = () => {
 
   return (
     <>
-      <Pagination />
+      <Pag />
     </>
 
   );

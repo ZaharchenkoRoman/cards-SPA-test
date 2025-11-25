@@ -112,17 +112,17 @@ table {
   column-gap: 150px;
 }
 
-.pagination-wrapper {
+.pag-wrapper {
   display: flex;
   flex-direction: row;
   margin: 40px auto;
   justify-self: center;
 }
-.pagination-wrapper .pagination-wrapper__ul {
+.pag-wrapper .pagination-wrapper__ul {
   display: flex;
   column-gap: 10px;
 }
-.pagination-wrapper .pagination-button {
+.pag-wrapper .pagination-button {
   margin: 0 15px;
 }
 
@@ -185,12 +185,17 @@ table {
 }
 
 .filtered-wrapper {
+  background-color: #5c62ec;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-content: center;
   column-gap: 30px;
   row-gap: 15px;
+}
+
+.search-input-div {
+  display: flex;
 }
 
 /*# sourceMappingURL=index.css.map */

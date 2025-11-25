@@ -1,25 +1,33 @@
-import {Input} from "antd";
 import Card from "../card/card.tsx";
-import {useState} from "react";
 import {useCardsStore} from "../store/store.ts";
+
+import {useState} from "react";
+import {Input} from "@mui/material";
 
 const SearchFilter = () => {
 
-  const {cards} = useCardsStore()
-  const [searchValue, setSearchValue] = useState<string>("")
+  const { searchingCards, searchFilter} = useCardsStore()
+
+const [value , setValue] = useState<string>("");
 
 
+  const handler = async(e) => {
+    setValue(e.target.value)
+    await searchFilter(value)
+  }
   return (
     <>
-      <Input
+      <div className="search-input-div"><Input
         className="search-input"
         type="text"
-        value={searchValue}
-        onChange={e => setSearchValue(e.target.value)}
-      />
-      {searchValue.length > 0 && (
-        <div className="filtered-wrapper">{cards.filter(card => card.email.toLowerCase().includes(searchValue.toLowerCase())).map(card =>
-          <Card card={card}></Card>)}
+        value={value}
+        onChange={(e) => handler(e)}
+        placeholder="введите id поста (цифру)"
+      /></div>
+      {value.length > 0 && (
+        <div className="filtered-wrapper">
+          {searchingCards.map(card =>
+            <Card card={card}></Card>)}
         </div>)}
     </>
   );

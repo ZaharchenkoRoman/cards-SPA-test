@@ -7,10 +7,15 @@
 }
 
 .filtered-wrapper {
+  background-color: #5c62ec;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-content: center;
   column-gap: 30px;
   row-gap: 15px;
+}
+
+.search-input-div {
+  display: flex;
 }

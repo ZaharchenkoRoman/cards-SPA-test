@@ -1,17 +1,27 @@
-import {Button} from "antd";
+
 import {Link, useLocation} from "react-router";
 import {useCardsStore} from "../store/store.ts";
 import {useState} from "react";
+import type {cardType} from "../store/types.ts";
+import {Button} from "@mui/material";
 
 const ProductIdPage = () => {
   const location = useLocation()
   const card = location.state
-  const {switchEditMode, isEditing, saveCardChangesHandler} = useCardsStore()
+  const {switchEditMode, isEditing, updateCardInfo} = useCardsStore()
   const [emailState, setEmailState] = useState<string>(card.email)
   const [nameState, setNameState] = useState<string>(card.name)
   const [bodyState, setBodyState] = useState<string>(card.body)
+  const [saveStatus, setSaveStatus] = useState<string>("")
 
-
+const saveChangesHandler = async (card: cardType) => {
+  await updateCardInfo(card.id, {
+    email: emailState,
+    name: nameState,
+    body: bodyState
+  });
+  setSaveStatus("Изменения успешно сохранены")
+}
 
 
   if (isEditing) {
@@ -24,12 +34,9 @@ const ProductIdPage = () => {
         <input value={emailState} onChange={(e) => setEmailState(e.target.value)}></input>
         <input value={nameState} onChange={(e) => setNameState(e.target.value)}></input>
         <Button
-          onClick={() => saveCardChangesHandler(card.id, {
-            email: emailState,
-            name: nameState,
-            body: bodyState
-          })}
+          onClick={() => saveChangesHandler(card)}
         >Save changes</Button>
+        {!!saveStatus && saveStatus}
       </div>
     )
   }
