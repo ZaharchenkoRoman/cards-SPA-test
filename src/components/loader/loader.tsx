@@ -2,7 +2,7 @@ const Loader = () => {
   return (
     <div>
       <img style={{display: "flex", margin: "240px"}}
-        src="../../../public/assets/Spinner-2.gif"
+        src="/assets/pics/Spinner-2.gif"
         alt="/"
       />
     </div>
