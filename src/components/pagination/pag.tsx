@@ -5,6 +5,7 @@ import SearchFilter from "../searchFilter/search-filter.tsx";
 import {Pagination, PaginationItem} from "@mui/material";
 import {Link} from "react-router-dom"
 import {memo, useEffect, useMemo} from "react";
+import Loader from "../loader/loader.tsx";
 
 const Pag = memo(() => {
 
@@ -15,7 +16,7 @@ const Pag = memo(() => {
     cardsOnPage,
     pageNumber,
     pagination,
-    setPageNumber,
+    setPageNumber, isLoading
   } = useCardsStore()
   const lastCardId = cardsOnPage * pageNumber
   const firstCardId = lastCardId - cardsOnPage
@@ -40,13 +41,14 @@ const Pag = memo(() => {
       {likedFilter === "All" ? (<>
         <SearchFilter />
         <div className="products-container">
+              {isLoading && <Loader/>}
           {cards.slice(firstCardId, lastCardId).map(card => <Card
             key={card.id}
             card={card}
           />)}
 
         </div>
-        <div className="pag-wrapper"><Pagination
+        {!isLoading && <div className="pag-wrapper"><Pagination
           count={pagesCount}
           page={pageNumber}
           onChange={(_, num) => handlePageChange(_, num)}
@@ -55,9 +57,9 @@ const Pag = memo(() => {
           renderItem={(item) => (<PaginationItem
             component={Link}
             to={`/products/?page=${item.page}`} {...item} />)}
-          
 
-        /></div>
+
+        /></div>}
       </>) : null}
 
 

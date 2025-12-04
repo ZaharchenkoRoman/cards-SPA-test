@@ -17,32 +17,6 @@ export const useCardsStore = create<cardStore>()(immer((set, get) => ({
   allCards: 500,
   likedCardsById: [],
   loadedPages: [],
-
-  fetchCards: async () => {
-    set((state) => {
-      state.isLoading = true;
-      state.error = null;
-    })
-    try {
-      const res = await axios.get<cardType[]>("https://jsonplaceholder.typicode.com/comments")
-      set((state) => {
-        state.cards = res.data.map(card => ({...card, isLiked: false}))
-        state.isLoading = false
-      });
-    } catch (e) {
-      set((state) => {
-        if (e instanceof Error) {
-          state.error = e.message;
-        } else if (typeof e === "string") {
-          state.error = e;
-        }
-        state.isLoading = false;
-
-      })
-
-    }
-
-  },
   createCard: async (newCard) => {
     await axios.post("https://jsonplaceholder.typicode.com/comments", {body: newCard})
     set((state) => {
@@ -99,15 +73,26 @@ export const useCardsStore = create<cardStore>()(immer((set, get) => ({
     })
   },
   pagination: async (pageNumber: number) => {
+   try {
+     set(() => ({
+       isLoading: true
+     }))
+     const {cardsOnPage, loadedPages} = get()
+     if (!loadedPages.includes(pageNumber)) {
+       const res = await axios.get<cardType[]>(`https://jsonplaceholder.typicode.com/comments?_page=${pageNumber}&_limit=${cardsOnPage}`)
+       set((state) => {
+         state.cards = [ ...state.cards, ...res.data]
+         state.loadedPages = [...state.loadedPages, pageNumber]
 
-    const {cardsOnPage, loadedPages} = get()
-    if (!loadedPages.includes(pageNumber)) {
-      const res = await axios.get<cardType[]>(`https://jsonplaceholder.typicode.com/comments?_page=${pageNumber}&_limit=${cardsOnPage}`)
-      set((state) => {
-        state.cards = [ ...state.cards, ...res.data]
-        state.loadedPages = [...state.loadedPages, pageNumber]
-      })
-    }
+       })
+     }
+   }
+   catch (error) {
+     console.error(error)
+   }
+   finally {set(() => ({
+     isLoading: false
+   }))}
 
 
   },

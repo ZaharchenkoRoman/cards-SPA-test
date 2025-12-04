@@ -10,7 +10,6 @@ export interface cardStore {
   cards: cardType[],
   isLoading: boolean,
   error: null | string
-  fetchCards: () => Promise<void>,
   createCard: (newCard: cardType) => Promise<void>,
   likeHandler: (card: cardType) => void,
   cardDeleteHandler: (id: number | string) => Promise<void>,

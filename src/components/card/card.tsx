@@ -36,7 +36,7 @@ const Card = ({card}: propsType) => {
       <img
 
         className="profile-pic"
-        src="/assets/pics/profilePhoto.svg"
+        src="public/assets/pics/profilePhoto.svg"
         alt=""
       />
       <p>{card.email.length > 20 ?  card.email.slice(0, 20) + "..." : card.email}</p>
