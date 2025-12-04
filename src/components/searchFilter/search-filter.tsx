@@ -1,19 +1,37 @@
 import Card from "../card/card.tsx";
 import {useCardsStore} from "../store/store.ts";
 
-import {useState} from "react";
+import {type ChangeEvent, useEffect, useState} from "react";
 import {Input} from "@mui/material";
+import {useDebounce} from "../../hooks/useDebounce.ts";
 
 const SearchFilter = () => {
 
-  const { searchingCards, searchFilter} = useCardsStore()
+  const {searchingCards, searchFilter} = useCardsStore()
 
-const [value , setValue] = useState<string>("");
+  const [value, setValue] = useState<string>("");
 
 
-  const handler = async(e) => {
+const debouncedValue = useDebounce(value, 500);
+
+
+useEffect(() => {
+  (async () => {
+    try {
+      await searchFilter(debouncedValue)
+    }
+    catch (e) {
+      console.error(e);
+    }
+  })()
+}, [debouncedValue, searchFilter])
+
+
+  const handler =  (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     setValue(e.target.value)
-    await searchFilter(value)
+
+
+
   }
   return (
     <>

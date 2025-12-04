@@ -16,6 +16,8 @@ export const useCardsStore = create<cardStore>()(immer((set, get) => ({
   pageNumber: 1,
   allCards: 500,
   likedCardsById: [],
+  loadedPages: [],
+
   fetchCards: async () => {
     set((state) => {
       state.isLoading = true;
@@ -49,11 +51,8 @@ export const useCardsStore = create<cardStore>()(immer((set, get) => ({
   },
   likeHandler: (card) => {
     set((state) => ({
-      cards: state.cards.map(item => item.id === card.id ? ({
-        ...item,
-        isLiked: !item.isLiked
-      }) : item),
-      likedCardsById: [...state.likedCardsById, card.id],
+      likedCardsById: state.likedCardsById.includes(card.id) ? state.likedCardsById.filter(el => el !== card.id) : [...state.likedCardsById, card.id],
+
 
     }))
 
@@ -77,7 +76,12 @@ export const useCardsStore = create<cardStore>()(immer((set, get) => ({
   updateCardInfo: async (id, payload) => {
     await axios.post("https://jsonplaceholder.typicode.com/comments", {body: payload})
     set((state) => {
-      state.cards = state.cards.map(card => id === card.id ? ({...card, ...payload}) : card)
+      state.cards = state.cards.map((card) => card.id === id ? {
+        ...card,
+        body: payload.body,
+        email: payload.email,
+        name: payload.name
+      } : card);
       state.isEditing = false
     })
 
@@ -95,15 +99,19 @@ export const useCardsStore = create<cardStore>()(immer((set, get) => ({
     })
   },
   pagination: async (pageNumber: number) => {
-    const {cardsOnPage} = get()
+
+    const {cardsOnPage, loadedPages} = get()
+    if (!loadedPages.includes(pageNumber)) {
+      const res = await axios.get<cardType[]>(`https://jsonplaceholder.typicode.com/comments?_page=${pageNumber}&_limit=${cardsOnPage}`)
+      set((state) => {
+        state.cards = [ ...state.cards, ...res.data]
+        state.loadedPages = [...state.loadedPages, pageNumber]
+      })
+    }
 
 
-    const res = await axios.get<cardType[]>(`https://jsonplaceholder.typicode.com/comments?_page=${pageNumber}&_limit=${cardsOnPage}`)
-    set((state) => ({
-      cards: [...res.data.map(card => ({...card, isLiked: false})), ...state.cards].filter((card, ind, array) => array.findIndex(c => c.id === card.id) === ind),
-    }))
+  },
 
-  }
 
 })))
 

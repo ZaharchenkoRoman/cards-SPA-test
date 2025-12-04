@@ -3,57 +3,59 @@ import Card from "../card/card.tsx";
 import PinnedFilter from "../pinned-filter/pinned-filter.tsx";
 import SearchFilter from "../searchFilter/search-filter.tsx";
 import {Pagination, PaginationItem} from "@mui/material";
-
 import {Link} from "react-router-dom"
-import {useEffect} from "react";
+import {memo, useEffect, useMemo} from "react";
 
-const Pag = () => {
+const Pag = memo(() => {
 
   const {
     cards,
-    error,
-    isLoading,
     likedFilter,
     allCards,
     cardsOnPage,
     pageNumber,
     pagination,
-    setPageNumber
+    setPageNumber,
   } = useCardsStore()
-  console.log(cards.length)
+  const lastCardId = cardsOnPage * pageNumber
+  const firstCardId = lastCardId - cardsOnPage
+
+
+  const handlePageChange = (_: unknown, num: number) => {
+    setPageNumber(num);
+  };
 
   useEffect(() => {
     pagination(pageNumber)
-  }, [pageNumber, pagination])
-  console.log("pagination render")
+  }, [pagination, pageNumber]);
+
+
+
+  const pagesCount = useMemo(() => Math.ceil(allCards / cardsOnPage), [allCards, cardsOnPage])
   return (
 
     <>
       <PinnedFilter />
 
-
-      {error ? <h1>{error}</h1> : null}
-      {isLoading ? <h1>Loading...</h1> : null}
-
-
       {likedFilter === "All" ? (<>
         <SearchFilter />
         <div className="products-container">
-          {cards.slice(0,10).map(card => <Card
+          {cards.slice(firstCardId, lastCardId).map(card => <Card
             key={card.id}
             card={card}
           />)}
 
         </div>
         <div className="pag-wrapper"><Pagination
-          count={Math.ceil(allCards / cardsOnPage)}
+          count={pagesCount}
           page={pageNumber}
-          onChange={(_, num) => setPageNumber(num)}
+          onChange={(_, num) => handlePageChange(_, num)}
           showFirstButton
           showLastButton
           renderItem={(item) => (<PaginationItem
             component={Link}
             to={`/products/?page=${item.page}`} {...item} />)}
+          
 
         /></div>
       </>) : null}
@@ -63,6 +65,6 @@ const Pag = () => {
 
 
   );
-};
+})
 
 export default Pag;

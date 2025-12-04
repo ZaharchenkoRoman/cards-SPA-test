@@ -1,11 +1,11 @@
 export interface cardType {
-  postId:  number | string
+  postId: number | string
   id: number | string
   name: string;
   email: string;
   body: string;
-  isLiked: boolean;
 }
+
 export interface cardStore {
   cards: cardType[],
   isLoading: boolean,
@@ -23,6 +23,7 @@ export interface cardStore {
     email: string,
     name: string
   }) => Promise<void>,
+
   searchingCards: cardType[],
   searchFilter: (text: string) => Promise<void>,
   cardsOnPage: number,
@@ -30,5 +31,7 @@ export interface cardStore {
   allCards: number,
   pagination: (pageNumber: number) => Promise<void>,
   setPageNumber: (page: number) => void,
-  likedCardsById: Array<number | string>
+  likedCardsById: Array<number | string>,
+  loadedPages: Array<number>,
+
 }

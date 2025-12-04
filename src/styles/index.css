@@ -133,6 +133,8 @@ table {
   column-gap: 20px;
   row-gap: 20px;
   justify-content: center;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .empty-pinned-filter {
@@ -141,6 +143,12 @@ table {
   justify-self: center;
   align-items: center;
   column-gap: 20px;
+  border: 1px solid black;
+  border-radius: 10px;
+  box-shadow: #26292D 1px 1px 1px;
+  flex-direction: column;
+  padding: 20px;
+  row-gap: 20px;
 }
 
 .pinnedCard-wrapper {
@@ -161,11 +169,8 @@ table {
 
 .form-wrapper {
   margin: 150px auto;
-  display: flex;
-  flex-direction: column;
-  row-gap: 15px;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-items: center;
   border-radius: 20px;
   height: 500px;
   width: 850px;
@@ -196,6 +201,25 @@ table {
 
 .search-input-div {
   display: flex;
+}
+
+.cardInfo-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 1000px;
+  flex-wrap: wrap;
+  text-align: center;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 15px;
+  margin: 250px auto;
+  row-gap: 30px;
+  padding: 15px;
+}
+.cardInfo-wrapper .span-info {
+  font-size: 18px;
+  font-weight: bold;
 }
 
 /*# sourceMappingURL=index.css.map */

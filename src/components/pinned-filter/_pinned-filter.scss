@@ -4,6 +4,13 @@
   justify-self: center;
   align-items: center;
   column-gap: 20px;
+  border: 1px solid black;
+  border-radius:10px;
+  box-shadow: #26292D 1px 1px 1px;
+  flex-direction: column;
+  padding : 20px;
+  row-gap: 20px;
+
 }
 .pinnedCard-wrapper {
   display: flex;

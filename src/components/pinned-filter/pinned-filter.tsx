@@ -14,14 +14,14 @@ const PinnedFilter = () => {
 
 
         <>
-          {cards.filter(card => card.isLiked).length > 0 ? (<>
+          {likedCardsById.length > 0 ? (<>
           <div className="pinnedCard-wrapper">{cards.filter(card => likedCardsById.includes(card.id)).map(card => (<Card
             key={card.id}
             card={card}
           ></Card>))
           }</div>
           <Button  className="back-button" onClick={() => setLikedFilter("All")}>Back</Button></>) : <div className="empty-pinned-filter">
-          <h1>тут пока ничего нет</h1>
+          <h1>Cписок закрепленного пуст!</h1>
           <Button onClick={() => setLikedFilter("All")}>назад</Button>
         </div>}</>
       </>

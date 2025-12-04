@@ -21,8 +21,9 @@ const Card = ({card}: propsType) => {
     event.stopPropagation()
   }
   const DeleteHandler = async (id: number | string, event: React.MouseEvent<HTMLDivElement>) => {
-    await cardDeleteHandler(id)
     event.stopPropagation()
+    await cardDeleteHandler(id)
+
 
   }
 
