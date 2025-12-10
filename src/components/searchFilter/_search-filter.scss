@@ -15,7 +15,21 @@
   column-gap: 30px;
   row-gap: 15px;
 }
-
-.search-input-div {
-  display: flex;
+.search-wrapper {
+display: flex;
+  align-items: center;
+  justify-content: center;
+  .search-input-div {
+    position: relative;
 }
+  .clearButton {
+    position: absolute;
+    transform: translateX(215px) translateY(14.5px);
+    transition: transform 0.2s ease-in-out;
+  }
+  .clearButton:hover {
+    transform:  translateX(216px) translateY(14.5px) scale(1.1)
+  }
+}
+
+

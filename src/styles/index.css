@@ -9,9 +9,18 @@
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+Button {
+  transition: transform 0.2s ease-in-out !important;
+}
+
+Button:hover {
+  cursor: pointer;
+  transform: translateY(3px);
+}
+
 .introductoryPage-container {
   background-color: #181717;
-  height: 90vh;
+  height: calc(100vh - 151px);
   align-content: center;
   justify-items: center;
   color: white;
@@ -100,6 +109,7 @@ table {
   flex-direction: column;
   justify-items: center;
   align-items: center;
+  transition: all 0.2s ease-in-out;
 }
 .card-container .profile-pic {
   width: 150px;
@@ -111,18 +121,25 @@ table {
   flex-direction: row;
   column-gap: 150px;
 }
-
-.pag-wrapper {
-  display: flex;
-  flex-direction: row;
-  margin: 40px auto;
-  justify-self: center;
+.card-container .iconButton:hover {
+  cursor: pointer;
+  transform: scale(1.2);
 }
-.pag-wrapper .pagination-wrapper__ul {
+.card-container .iconButton {
+  transition: all 0.3s ease-in-out;
+}
+
+.card-container:hover {
+  transform: translateY(-3px);
+  box-shadow: 1px 1px 10px #1976d2;
+}
+
+.pagination-wrapper__ul {
   display: flex;
   column-gap: 10px;
 }
-.pag-wrapper .pagination-button {
+
+.pagination-button {
   margin: 0 15px;
 }
 
@@ -139,7 +156,7 @@ table {
 
 .empty-pinned-filter {
   display: flex;
-  margin-top: 350px;
+  margin-top: 320px;
   justify-self: center;
   align-items: center;
   column-gap: 20px;
@@ -163,8 +180,7 @@ table {
 }
 
 .back-button {
-  margin: 20px auto;
-  display: block;
+  margin: 20px auto !important;
 }
 
 .form-wrapper {
@@ -199,8 +215,21 @@ table {
   row-gap: 15px;
 }
 
-.search-input-div {
+.search-wrapper {
   display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.search-wrapper .search-input-div {
+  position: relative;
+}
+.search-wrapper .clearButton {
+  position: absolute;
+  transform: translateX(215px) translateY(14.5px);
+  transition: transform 0.2s ease-in-out;
+}
+.search-wrapper .clearButton:hover {
+  transform: translateX(216px) translateY(14.5px) scale(1.1);
 }
 
 .cardInfo-wrapper {
@@ -220,6 +249,13 @@ table {
 .cardInfo-wrapper .span-info {
   font-size: 18px;
   font-weight: bold;
+}
+
+.pag-wrapper {
+  display: flex;
+  flex-direction: row;
+  margin: 40px auto;
+  justify-self: center;
 }
 
 /*# sourceMappingURL=index.css.map */

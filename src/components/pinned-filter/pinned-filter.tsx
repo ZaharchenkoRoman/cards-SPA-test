@@ -15,7 +15,7 @@ const PinnedFilter = () => {
 
         <>
           {likedCardsById.length > 0 ? (<>
-          <div className="pinnedCard-wrapper">{cards.filter(card => likedCardsById.includes(card.id)).map(card => (<Card
+          <div className="products-container">{cards.filter(card => likedCardsById.includes(card.id)).map(card => (<Card
             key={card.id}
             card={card}
           ></Card>))

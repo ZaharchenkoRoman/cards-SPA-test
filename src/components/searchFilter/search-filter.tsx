@@ -1,51 +1,48 @@
 import Card from "../card/card.tsx";
 import {useCardsStore} from "../store/store.ts";
 
-import {type ChangeEvent, useEffect, useState} from "react";
-import {Input} from "@mui/material";
-import {useDebounce} from "../../hooks/useDebounce.ts";
+import {type ChangeEvent} from "react";
+import {Button, Input} from "@mui/material";
+import {AiOutlineClear} from "react-icons/ai";
+
 
 const SearchFilter = () => {
 
-  const {searchingCards, searchFilter} = useCardsStore()
-
-  const [value, setValue] = useState<string>("");
+  const {cards, setSearchingValue, searchingValue} = useCardsStore()
 
 
-const debouncedValue = useDebounce(value, 500);
-
-
-useEffect(() => {
-  (async () => {
-    try {
-      await searchFilter(debouncedValue)
-    }
-    catch (e) {
-      console.error(e);
-    }
-  })()
-}, [debouncedValue, searchFilter])
-
-
-  const handler =  (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    setValue(e.target.value)
-
-
-
+  const handler = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    setSearchingValue(e.target.value)
   }
+
+  const clearInputValue = () => {
+    setSearchingValue("")
+  }
+
+  const searchFilterCards = cards.filter(card => card.email.toLowerCase().includes(searchingValue.toLowerCase())).slice(0, 10)
+
   return (
     <>
-      <div className="search-input-div"><Input
-        className="search-input"
-        type="text"
-        value={value}
-        onChange={(e) => handler(e)}
-        placeholder="введите id поста (цифру)"
-      /></div>
-      {value.length > 0 && (
-        <div className="filtered-wrapper">
-          {searchingCards.map(card =>
-            <Card card={card}></Card>)}
+      <div className="search-wrapper">
+        <div className="search-input-div"><Input
+          className="search-input"
+          type="text"
+          value={searchingValue}
+          onChange={(e) => handler(e)}
+          placeholder="введите почту карточки: "
+        /></div>
+        <Button
+          className="clearButton"
+          onClick={clearInputValue}
+        ><AiOutlineClear /></Button></div>
+      {searchingValue.length > 0 && (
+        <div className="products-container">
+          {searchFilterCards.length !== 0 ? searchFilterCards.map(card =>
+            <Card
+            key={card.id}
+          card={card}
+        />): (<h1 className="cardInfo-wrapper">Карочек не найдено!</h1>)}
+
         </div>)}
     </>
   );

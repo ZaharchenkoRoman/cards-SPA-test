@@ -3,25 +3,4 @@
   flex-direction: row;
   margin: 40px auto;
   justify-self: center;
-
-  .pagination-wrapper__ul {
-    display: flex;
-    column-gap: 10px;
-  }
-
-  .pagination-button {
-    margin: 0 15px
-  }
 }
-
-.products-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  column-gap: 20px;
-  row-gap: 20px;
-  justify-content: center;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-

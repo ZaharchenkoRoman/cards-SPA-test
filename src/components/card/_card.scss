@@ -5,27 +5,30 @@
   width: 200px;
   background-color: white;
   border-radius: 15px;
-  box-shadow: 1px 1px 10px black; ;
+  box-shadow: 1px 1px 10px black;;
   flex-direction: column;
   justify-items: center;
   align-items: center;
-
-
-
-
-
+  transition: all 0.2s ease-in-out;
   .profile-pic {
-
     width: 150px;
     height: 150px;
   }
-
-
-
   .icons-wrapper {
     margin: 10px 20px;
     display: flex;
     flex-direction: row;
     column-gap: 150px;
   }
+  .iconButton:hover {
+    cursor: pointer;
+    transform: scale(1.2);
+  }
+  .iconButton {
+    transition: all 0.3s ease-in-out;
+  }
+}
+.card-container:hover {
+  transform: translateY(-3px);
+  box-shadow: 1px 1px 10px #1976d2;;
 }

@@ -4,22 +4,21 @@ import {Button} from "@mui/material";
 
 
 const Header = () => {
-  const {setLikedFilter, likedFilter, pagination, setPageNumber} = useCardsStore()
+  const {setLikedFilter, setPageNumber} = useCardsStore()
   const toProductsHandler = useNavigate()
   const linkHandler = async () => {
+    setLikedFilter("All")
     setPageNumber(1)
-    await pagination(1)
     toProductsHandler("/products")
 
   }
   return (
     <div className="header-container">
-    <Button onClick={linkHandler} disabled={likedFilter === "Pinned"}>All cards</Button>
-      <Link to="/createProduct"><Button disabled={likedFilter === "Pinned"}>Create product</Button></Link>
-      <NavLink to="/products"><Button
-        disabled={likedFilter === "Pinned"}
-        onClick={() => setLikedFilter("Pinned")}
+    <Button className="headerButton" onClick={linkHandler} >All cards</Button>
+      <Link to="/createProduct"><Button className="headerButton">Create product</Button></Link>
+      <NavLink to="/products"><Button className="headerButton" onClick={() => setLikedFilter("Pinned")}
       >Pinned Cards</Button></NavLink>
+
     </div>
   );
 };

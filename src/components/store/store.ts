@@ -4,7 +4,7 @@ import {immer} from "zustand/middleware/immer";
 import type {cardStore, cardType} from "./types.ts";
 
 
-export const useCardsStore = create<cardStore>()(immer((set, get) => ({
+export const useCardsStore = create<cardStore>()(immer((set) => ({
 
   cards: [],
   isLoading: false,
@@ -14,9 +14,11 @@ export const useCardsStore = create<cardStore>()(immer((set, get) => ({
   searchingCards: [],
   cardsOnPage: 10,
   pageNumber: 1,
-  allCards: 500,
   likedCardsById: [],
   loadedPages: [],
+  cardsExist: false,
+  searchingValue: "",
+
   createCard: async (newCard) => {
     await axios.post("https://jsonplaceholder.typicode.com/comments", {body: newCard})
     set((state) => {
@@ -72,31 +74,36 @@ export const useCardsStore = create<cardStore>()(immer((set, get) => ({
       state.pageNumber = pageNumber
     })
   },
-  pagination: async (pageNumber: number) => {
-   try {
-     set(() => ({
-       isLoading: true
-     }))
-     const {cardsOnPage, loadedPages} = get()
-     if (!loadedPages.includes(pageNumber)) {
-       const res = await axios.get<cardType[]>(`https://jsonplaceholder.typicode.com/comments?_page=${pageNumber}&_limit=${cardsOnPage}`)
-       set((state) => {
-         state.cards = [ ...state.cards, ...res.data]
-         state.loadedPages = [...state.loadedPages, pageNumber]
-
-       })
-     }
-   }
-   catch (error) {
-     console.error(error)
-   }
-   finally {set(() => ({
-     isLoading: false
-   }))}
-
-
+  fetchCards: async () => {
+    try {
+      set(() => ({
+        isLoading: true,
+        error: null
+      }))
+      const res = await axios.get<cardType[]>(`https://jsonplaceholder.typicode.com/comments`)
+      set((state) => {
+        state.cards = res.data
+      })
+    } catch (e) {
+      set((state) => {
+        if (typeof e === "string") {
+          state.error = e
+        }
+      })
+    } finally {
+      set(() => ({
+        isLoading: false
+      }))
+    }
   },
-
+  cardsExistHandler: () => {
+    set((state) => {state.cardsExist = !state.cardsExist})
+  },
+  setSearchingValue: (value) => {
+    set(() => ({
+      searchingValue: value
+    }))
+  }
 
 })))
 

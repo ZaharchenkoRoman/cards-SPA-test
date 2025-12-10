@@ -31,7 +31,6 @@ const Card = ({card}: propsType) => {
     <div
       className="card-container"
       onClick={() => productIdHandler(card.id)}
-
     >
       <img
 
@@ -41,9 +40,9 @@ const Card = ({card}: propsType) => {
       />
       <p>{card.email.length > 20 ?  card.email.slice(0, 20) + "..." : card.email}</p>
       <div className="icons-wrapper">
-        <div onClick={(event) => DeleteHandler(card.id, event)}><FaTrash />
+        <div className="iconButton"  onClick={(event) => DeleteHandler(card.id, event)}><FaTrash />
         </div>
-        <div onClick={(event) => switchLikeHandler(card, event)}>{ likedCardsById.includes(card.id)?
+        <div className="iconButton" onClick={(event) => switchLikeHandler(card, event)}>{ likedCardsById.includes(card.id)?
           <FcDislike /> : <FcLike />}</div>
       </div>
     </div>

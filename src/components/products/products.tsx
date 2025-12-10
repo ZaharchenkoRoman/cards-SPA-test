@@ -1,4 +1,4 @@
-import Pag from "../pagination/pag.tsx";
+import AllCards from "../allCards/AllCards.tsx";
 
 
 const Products = () => {
@@ -6,7 +6,7 @@ const Products = () => {
 
   return (
     <>
-      <Pag />
+      <AllCards />
     </>
 
   );

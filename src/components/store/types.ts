@@ -26,11 +26,13 @@ export interface cardStore {
   searchingCards: cardType[],
   searchFilter: (text: string) => Promise<void>,
   cardsOnPage: number,
-  pageNumber: number,
-  allCards: number,
-  pagination: (pageNumber: number) => Promise<void>,
+  fetchCards: (pageNumber: number) => Promise<void>,
   setPageNumber: (page: number) => void,
-  likedCardsById: Array<number | string>,
-  loadedPages: Array<number>,
+  pageNumber: number,
+  likedCardsById: Array<number>,
+  cardsExist: boolean,
+  cardsExistHandler: () => void,
+  searchingValue: string,
+  setSearchingValue: (value: string) => void,
 
 }
