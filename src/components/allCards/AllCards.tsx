@@ -28,14 +28,10 @@ const AllCards = memo(() => {
 
 
 
-
   const fetchCardsHandler = () => {
     cardsExistHandler()
     fetchCards(pageNumber)
   }
-
-
-
 
 
   return (
@@ -59,7 +55,7 @@ const AllCards = memo(() => {
 
                 {isLoading && <Loader />}
 
-                {cards.slice(firstCardId, lastCardId).map(card => <Card
+                {Array.from(cards.values()).slice(firstCardId,lastCardId).map(card => <Card
                   key={card.id}
                   card={card}
                 />)}

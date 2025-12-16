@@ -2,11 +2,13 @@ import {create} from "zustand/react";
 import axios from "axios";
 import {immer} from "zustand/middleware/immer";
 import type {cardStore, cardType} from "./types.ts";
+import {enableMapSet} from "immer";
 
+enableMapSet();
 
 export const useCardsStore = create<cardStore>()(immer((set) => ({
 
-  cards: [],
+  cards: new Map(),
   isLoading: false,
   error: null,
   likedFilter: "All",
@@ -22,7 +24,7 @@ export const useCardsStore = create<cardStore>()(immer((set) => ({
   createCard: async (newCard) => {
     await axios.post("https://jsonplaceholder.typicode.com/comments", {body: newCard})
     set((state) => {
-      state.cards = [newCard, ...state.cards];
+      state.cards = new Map([[newCard.id, newCard], ...state.cards]);
     })
   },
   likeHandler: (card) => {
@@ -35,9 +37,12 @@ export const useCardsStore = create<cardStore>()(immer((set) => ({
   },
   cardDeleteHandler: async (id) => {
     await axios.delete(`https://jsonplaceholder.typicode.com/comments/${id}`)
-    set((state) => ({
-      cards: state.cards.filter(card => card.id !== id)
-    }))
+
+    set((state) => {
+      if (state.cards.has(String(id))) {
+        state.cards.delete(String(id))
+      }
+    })
   },
   setLikedFilter: (filter) => {
     set(() => ({
@@ -52,12 +57,10 @@ export const useCardsStore = create<cardStore>()(immer((set) => ({
   updateCardInfo: async (id, payload) => {
     await axios.post("https://jsonplaceholder.typicode.com/comments", {body: payload})
     set((state) => {
-      state.cards = state.cards.map((card) => card.id === id ? {
-        ...card,
-        body: payload.body,
-        email: payload.email,
-        name: payload.name
-      } : card);
+    if (state.cards.has(String(id))) {
+      state.cards.set(String(id), payload)
+
+    }
       state.isEditing = false
     })
 
@@ -81,9 +84,16 @@ export const useCardsStore = create<cardStore>()(immer((set) => ({
         error: null
       }))
       const res = await axios.get<cardType[]>(`https://jsonplaceholder.typicode.com/comments`)
-      set((state) => {
-        state.cards = res.data
+      const cardsMap = new Map<string, cardType>()
+      res.data.map((card: cardType) => {
+        cardsMap.set(String(card.id), card)
       })
+      set(() => ({
+        cards: cardsMap,
+        isLoading: false,
+        error: null
+      }))
+
     } catch (e) {
       set((state) => {
         if (typeof e === "string") {

@@ -12,20 +12,22 @@ const Card = ({card}: propsType) => {
   const loc = useNavigate();
 
 
-  const productIdHandler = (id: number | string) => {
+
+  const productIdHandler = (id: number | string | undefined) => {
     loc(`/products/${id}`, {state: card})
 
   }
-  const switchLikeHandler = (card: cardType , event: React.MouseEvent<HTMLDivElement>): void => {
+  const switchLikeHandler = (card: cardType, event: React.MouseEvent<HTMLDivElement>): void => {
     likeHandler(card)
     event.stopPropagation()
   }
-  const DeleteHandler = async (id: number | string, event: React.MouseEvent<HTMLDivElement>) => {
+  const DeleteHandler = async (id: number | string | undefined, event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation()
     await cardDeleteHandler(id)
 
 
   }
+
 
   return (
     <div
@@ -38,11 +40,17 @@ const Card = ({card}: propsType) => {
         src="assets/pics/profilePhoto.svg"
         alt=""
       />
-      <p>{card.email.length > 20 ?  card.email.slice(0, 20) + "..." : card.email}</p>
+      <p>{card.email.slice(0,15) + "..."}</p>
       <div className="icons-wrapper">
-        <div className="iconButton"  onClick={(event) => DeleteHandler(card.id, event)}><FaTrash />
+        <div
+          className="iconButton"
+          onClick={(event) => DeleteHandler(card.id, event)}
+        ><FaTrash />
         </div>
-        <div className="iconButton" onClick={(event) => switchLikeHandler(card, event)}>{ likedCardsById.includes(card.id)?
+        <div
+          className="iconButton"
+          onClick={(event) => switchLikeHandler(card, event)}
+        >{likedCardsById.includes(card.id) ?
           <FcDislike /> : <FcLike />}</div>
       </div>
     </div>
@@ -50,3 +58,5 @@ const Card = ({card}: propsType) => {
 };
 
 export default Card;
+
+

@@ -19,7 +19,7 @@ const SearchFilter = () => {
     setSearchingValue("")
   }
 
-  const searchFilterCards = cards.filter(card => card.email.toLowerCase().includes(searchingValue.toLowerCase())).slice(0, 10)
+  const searchFilterCards = Array.from(cards.values()).filter(card => card.email.toLowerCase().includes(searchingValue.toLowerCase()))
 
   return (
     <>

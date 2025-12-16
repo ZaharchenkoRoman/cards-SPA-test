@@ -1,26 +1,28 @@
 export interface cardType {
-  postId: number | string
-  id: number | string
+  postId?: number | string
+  id?: number | string
   name: string;
   email: string;
   body: string;
 }
 
 export interface cardStore {
-  cards: cardType[],
+  cards: Map<string | number | undefined, cardType>,
   isLoading: boolean,
   error: null | string
   createCard: (newCard: cardType) => Promise<void>,
   likeHandler: (card: cardType) => void,
-  cardDeleteHandler: (id: number | string) => Promise<void>,
+  cardDeleteHandler: (id: number | string | undefined) => Promise<void>,
   setLikedFilter: (filter: string) => void,
   likedFilter: "All" | "Pinned",
   isEditing: boolean,
   switchEditMode: () => void,
-  updateCardInfo: (id: number | string, payload: {
-    body: string,
-    email: string,
-    name: string
+  updateCardInfo: (id: number | string | undefined, payload: {
+    id: number | string | undefined;
+    postId: number | string | undefined;
+    email: string;
+    name: string;
+    body: string
   }) => Promise<void>,
 
   searchingCards: cardType[],
@@ -29,7 +31,7 @@ export interface cardStore {
   fetchCards: (pageNumber: number) => Promise<void>,
   setPageNumber: (page: number) => void,
   pageNumber: number,
-  likedCardsById: Array<number>,
+  likedCardsById: Array<number | string | undefined>,
   cardsExist: boolean,
   cardsExistHandler: () => void,
   searchingValue: string,

@@ -16,6 +16,8 @@ const ProductIdPage = () => {
 
 const saveChangesHandler = async (card: cardType) => {
   await updateCardInfo(card.id, {
+    id: card.id,
+    postId: card.postId,
     email: emailState,
     name: nameState,
     body: bodyState

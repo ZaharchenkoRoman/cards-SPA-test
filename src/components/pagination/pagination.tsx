@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const PaginationMui = () => {
   const {cards, cardsOnPage, setPageNumber, pageNumber} = useCardsStore()
-  const pagesCount = useMemo(() => Math.ceil(cards.length / cardsOnPage), [cards, cardsOnPage])
+  const pagesCount = useMemo(() => Math.ceil(Array.from(cards.values()).length / cardsOnPage), [cards, cardsOnPage])
   const handlePageChange = (_: unknown, num: number) => {
     setPageNumber(num);
   };
