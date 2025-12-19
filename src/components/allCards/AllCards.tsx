@@ -3,12 +3,12 @@ import Card from "../card/card.tsx";
 import PinnedFilter from "../pinned-filter/pinned-filter.tsx";
 import SearchFilter from "../searchFilter/search-filter.tsx";
 import {Button} from "@mui/material";
-import {memo} from "react";
+
 import Loader from "../loader/loader.tsx";
 import PaginationMui from "../pagination/pagination.tsx";
 
 
-const AllCards = memo(() => {
+const AllCards = () => {
 
   const {
     cards,
@@ -27,17 +27,15 @@ const AllCards = memo(() => {
   const firstCardId = lastCardId - cardsOnPage
 
 
-
   const fetchCardsHandler = () => {
     cardsExistHandler()
     fetchCards(pageNumber)
   }
 
-
   return (
 
     <>
-      {cardsExist && likedFilter ==="All" && <SearchFilter />}
+      {cardsExist && likedFilter === "All" && <SearchFilter />}
       {searchingValue.length === 0 && (
         <>
           <PinnedFilter />
@@ -55,20 +53,21 @@ const AllCards = memo(() => {
 
                 {isLoading && <Loader />}
 
-                {Array.from(cards.values()).slice(firstCardId,lastCardId).map(card => <Card
-                  key={card.id}
-                  card={card}
-                />)}
+                {Array.from(cards.values()).slice(firstCardId, lastCardId).map(card =>
+                  <Card
+                    key={card.id}
+                    card={card}
+                  />)}
 
               </div>
-              {!isLoading && cardsExist && <PaginationMui/>
-               }
+              {!isLoading && cardsExist && <PaginationMui />
+              }
             </>) : null}
         </>)
-    }  </>
+      }  </>
 
 
   );
-})
+}
 
 export default AllCards;

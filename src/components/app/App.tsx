@@ -1,9 +1,9 @@
 import {Route, Routes} from "react-router";
 import IntroductoryPage from "../introductory-page/introductory-page.tsx";
 import Header from "../header/header.tsx";
-import {lazy, Suspense} from "react";
+import {lazy} from "react";
 
-const ProductsLazyPage = lazy(() => import("../products/products.tsx"));
+const ProductsLazyPage = lazy(() => import("../allCards/AllCards.tsx"));
 const ProductIdLazyPage = lazy(() => import("../productIdPage/productIdPage.tsx"))
 const CreateProductLazyPage = lazy(() => import("../create-product/create-product.tsx"));
 
@@ -20,15 +20,15 @@ const App = () => {
         ></Route>
         <Route
           path="/products"
-          element={<Suspense fallback={(<div>...Loading</div>)}><ProductsLazyPage /></Suspense>}
+          element={<ProductsLazyPage />}
         ></Route>
         <Route
           path="/products/:id"
-          element={<Suspense fallback={(<div>...Loading</div>)}><ProductIdLazyPage /></Suspense>}
+          element={<ProductIdLazyPage />}
         ></Route>
         <Route
           path="/createProduct"
-          element={<Suspense fallback={(<div>...Loading</div>)}><CreateProductLazyPage /></Suspense>}
+          element={<CreateProductLazyPage />}
         ></Route>
       </Routes>
     </>

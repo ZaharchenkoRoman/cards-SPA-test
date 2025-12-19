@@ -7,6 +7,7 @@ import * as React from "react";
 import type {cardType} from "../store/types.ts";
 
 
+
 const Card = ({card}: propsType) => {
   const {likeHandler, cardDeleteHandler, likedCardsById} = useCardsStore()
   const loc = useNavigate();

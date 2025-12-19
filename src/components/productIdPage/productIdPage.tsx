@@ -1,9 +1,14 @@
-
 import {Link, useLocation} from "react-router";
 import {useCardsStore} from "../store/store.ts";
 import {useState} from "react";
-import type {cardType} from "../store/types.ts";
-import {Button, Input} from "@mui/material";
+import {Button, TextField} from "@mui/material";
+import {type SubmitHandler, useForm} from "react-hook-form";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {
+  schema,
+  type schemaType
+} from "./updateProductInfoScheme/updateProductInfoSchema.ts";
+
 
 const ProductIdPage = () => {
   const location = useLocation()
@@ -14,46 +19,68 @@ const ProductIdPage = () => {
   const [bodyState, setBodyState] = useState<string>(card.body)
 
 
-const saveChangesHandler = async (card: cardType) => {
-  await updateCardInfo(card.id, {
-    id: card.id,
-    postId: card.postId,
-    email: emailState,
-    name: nameState,
-    body: bodyState
-  });
-}
+  const {
+    handleSubmit,
+    reset,
+    register,
+    formState: {errors}
+  } = useForm<schemaType>({
+    resolver: zodResolver(schema),
+    mode: "onChange"
+  },)
+  const submitHandler: SubmitHandler<schemaType> = async (data: {
+    body: string,
+    email: string,
+    name: string
+  }) => {
 
+    await updateCardInfo(card.id, {id: card.id, postId: card.postId, ...data})
+    reset()
+  }
 
-
-
-
-if (isEditing) {
+  if (isEditing) {
     return (
 
       <>
 
-        <div className="cardInfo-wrapper">
+        <form
+          onSubmit={handleSubmit(submitHandler)}
+          className="cardInfo-wrapper"
+        >
 
           <Link to="/products">
-            <Button>back to cards</Button>
+            <Button onClick={switchEditMode}>back to cards</Button>
           </Link>
-          <Input
+          <TextField
+            variant={"standard"}
+            {...register("body")}
+            label={"Введите описание:"}
             value={bodyState}
             onChange={(e) => setBodyState(e.target.value)}
-          ></Input>
-          <Input
+          ></TextField>
+          {errors.body && <h1 style={{color: "red"}}>{errors.body.message}</h1>}
+          <TextField
+            label={"Введите Email:"}{...register("email", {
+            required: "поле обязательно", minLength: {
+              value: 3, message: "минимум символов 3"
+            }
+          })}
             value={emailState}
+            variant={"standard"}
             onChange={(e) => setEmailState(e.target.value)}
-          ></Input>
-          <Input
-            value={nameState}
-            onChange={(e) => setNameState(e.target.value)}
-          ></Input>
+          ></TextField>
+          {errors.email && <h1 style={{color: "red"}}>{errors.email.message}</h1>}
+          <TextField {...register("name")} label={"Введите название:"}
+                     value={nameState}
+                     variant={"standard"}
+                     onChange={(e) => setNameState(e.target.value)}
+          ></TextField>
+          {errors.name && <h1 style={{color: "red"}}>{errors.name.message}</h1>}
           <Button
-            onClick={() => saveChangesHandler(card)}
+            type={"submit"}
+
           >Save changes</Button>
-        </div>
+        </form>
       </>
     )
   }
@@ -65,7 +92,8 @@ if (isEditing) {
         <Button>back to cards</Button>
       </Link>
       <h1>
-        <span className="span-info">Информация о карточке </span>: {bodyState}</h1>
+        <span className="span-info">Информация о карточке </span>: {bodyState}
+      </h1>
       <h1>
         <span className="span-info">Почта</span>: {emailState}</h1>
       <h1>
