@@ -11,7 +11,7 @@ const SearchFilter = () => {
   const {cards, setSearchingValue, searchingValue} = useCardsStore()
 
 
-  const handler = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+  const SearchHandler = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     setSearchingValue(e.target.value)
   }
 
@@ -23,24 +23,29 @@ const SearchFilter = () => {
   return (
     <>
       <div className="search-wrapper">
-        <div className="search-input-div"><Input
+        <div className="search-input-div">
+          <Input
           className="search-input"
           type="text"
           value={searchingValue}
-          onChange={(e) => handler(e)}
+          onChange={(e) => SearchHandler(e)}
           placeholder="введите почту карточки: "
-        /></div>
+        />
+        </div>
         <Button
           className="clearButton"
           onClick={clearInputValue}
-        ><AiOutlineClear /></Button></div>
+        >
+          <AiOutlineClear />
+        </Button>
+      </div>
       {searchingValue.length > 0 && (
         <div className="products-container">
           {searchFilterCards.length !== 0 ? searchFilterCards.map(card =>
             <Card
-            key={card.id}
-          card={card}
-        />): (<h1 className="cardInfo-wrapper">Карочек не найдено!</h1>)}
+              key={card.id}
+              card={card}
+            />) : (<h1 className="cardInfo-wrapper">Карочек не найдено!</h1>)}
 
         </div>)}
     </>

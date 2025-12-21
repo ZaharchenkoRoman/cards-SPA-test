@@ -59,7 +59,6 @@ export const useCardsStore = create<cardStore>()(immer((set) => ({
     set((state) => {
     if (state.cards.has(String(id))) {
       state.cards.set(String(id), payload)
-
     }
       state.isEditing = false
     })
@@ -114,7 +113,6 @@ export const useCardsStore = create<cardStore>()(immer((set) => ({
       searchingValue: value
     }))
   }
-
 })))
 
 

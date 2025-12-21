@@ -1,13 +1,13 @@
 export interface cardType {
   postId?: number | string
-  id?: number | string
+  id: number | string
   name: string;
   email: string;
   body: string;
 }
 
 export interface cardStore {
-  cards: Map<string | number | undefined, cardType>,
+  cards: Map<string | number, cardType>,
   isLoading: boolean,
   error: null | string
   createCard: (newCard: cardType) => Promise<void>,
@@ -17,9 +17,9 @@ export interface cardStore {
   likedFilter: "All" | "Pinned",
   isEditing: boolean,
   switchEditMode: () => void,
-  updateCardInfo: (id: number | string | undefined, payload: {
-    id: number | string | undefined;
-    postId: number | string | undefined;
+  updateCardInfo: (id: number | string , payload: {
+    id: number | string ;
+    postId: number | string;
     email: string;
     name: string;
     body: string

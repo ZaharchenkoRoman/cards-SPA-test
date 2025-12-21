@@ -60,17 +60,21 @@ const ProductIdPage = () => {
           ></TextField>
           {errors.body && <h1 style={{color: "red"}}>{errors.body.message}</h1>}
           <TextField
-            label={"Введите Email:"}{...register("email", {
-            required: "поле обязательно", minLength: {
-              value: 3, message: "минимум символов 3"
-            }
-          })}
+            label={"Введите Email:"}
+            {...register("email",
+              {
+              required: "поле обязательно", minLength: {
+                value: 3, message: "минимум символов 3"
+              }
+            })}
             value={emailState}
             variant={"standard"}
             onChange={(e) => setEmailState(e.target.value)}
           ></TextField>
-          {errors.email && <h1 style={{color: "red"}}>{errors.email.message}</h1>}
-          <TextField {...register("name")} label={"Введите название:"}
+          {errors.email &&
+            <h1 style={{color: "red"}}>{errors.email.message}</h1>}
+          <TextField {...register("name")}
+                     label={"Введите название:"}
                      value={nameState}
                      variant={"standard"}
                      onChange={(e) => setNameState(e.target.value)}
@@ -78,8 +82,9 @@ const ProductIdPage = () => {
           {errors.name && <h1 style={{color: "red"}}>{errors.name.message}</h1>}
           <Button
             type={"submit"}
-
-          >Save changes</Button>
+          >
+            Save changes
+          </Button>
         </form>
       </>
     )

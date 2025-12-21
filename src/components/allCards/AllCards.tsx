@@ -6,10 +6,24 @@ import {Button} from "@mui/material";
 
 import Loader from "../loader/loader.tsx";
 import PaginationMui from "../pagination/pagination.tsx";
+import {
+  closestCenter,
+  DndContext, type DragEndEvent,
+  PointerSensor,
+  useSensor,
+  useSensors,
+}
+  from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  verticalListSortingStrategy
+} from "@dnd-kit/sortable";
+import {useEffect, useState} from "react";
+import type {cardType} from "../store/types.ts";
 
 
 const AllCards = () => {
-
   const {
     cards,
     likedFilter,
@@ -22,6 +36,14 @@ const AllCards = () => {
     searchingValue
   } = useCardsStore()
 
+  const [sortableCards, setSortableCards] = useState<cardType[]>([]);
+
+
+  useEffect(() => {
+    setSortableCards(Array.from(cards.values()));
+  }, [cards]);
+
+
 
   const lastCardId = cardsOnPage * pageNumber
   const firstCardId = lastCardId - cardsOnPage
@@ -32,9 +54,35 @@ const AllCards = () => {
     fetchCards(pageNumber)
   }
 
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 5,
+      },
+    })
+  );
+  const handleDragEnd = (event: DragEndEvent) => {
+    const {active, over} = event;
+    if (over && active.id !== over.id) {
+      const newItems = arrayMove(
+        sortableCards,
+        sortableCards.findIndex((item) => item.id === active.id),
+        sortableCards.findIndex((item) => item.id === over.id)
+      );
+      setSortableCards(newItems);
+    }
+    }
+
+
+
+  const pagedItems = sortableCards.slice(firstCardId, lastCardId)
   return (
 
-    <>
+    <DndContext
+      sensors={sensors}
+      collisionDetection={closestCenter}
+      onDragEnd={handleDragEnd}
+    >
       {cardsExist && likedFilter === "All" && <SearchFilter />}
       {searchingValue.length === 0 && (
         <>
@@ -53,21 +101,27 @@ const AllCards = () => {
 
                 {isLoading && <Loader />}
 
-                {Array.from(cards.values()).slice(firstCardId, lastCardId).map(card =>
-                  <Card
-                    key={card.id}
-                    card={card}
-                  />)}
+
+                <SortableContext
+                  items={pagedItems.map(i => i.id?.toString())}
+                  strategy={verticalListSortingStrategy}
+                >
+                  {pagedItems.map((item) => (
+                    <Card
+                      key={item.id}
+                      card={item}
+                    />
+                  ))}
+                </SortableContext>
 
               </div>
               {!isLoading && cardsExist && <PaginationMui />
               }
             </>) : null}
         </>)
-      }  </>
-
-
+      }  </DndContext>
   );
 }
+
 
 export default AllCards;
