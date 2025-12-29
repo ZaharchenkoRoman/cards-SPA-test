@@ -14,7 +14,7 @@ export const useCardsStore = create<cardStore>()(immer((set) => ({
   likedFilter: "All",
   isEditing: false,
   searchingCards: [],
-  cardsOnPage: 10,
+  cardsOnPage: 8,
   pageNumber: 1,
   likedCardsById: [],
   loadedPages: [],
